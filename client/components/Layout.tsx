@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Search, Menu, X, User, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cartItemsCount] = useState(3); // This will be dynamic later
+  const { itemCount } = useCart();
 
   const navigation = [
     { name: "Shop", href: "/shop" },
@@ -77,16 +78,18 @@ export default function Layout({ children }: LayoutProps) {
               </Button>
 
               {/* Cart */}
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemsCount > 0 && (
-                  <Badge
-                    variant="destructive"
-                    className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-                  >
-                    {cartItemsCount}
-                  </Badge>
-                )}
+              <Button variant="ghost" size="icon" className="relative" asChild>
+                <Link to="/cart">
+                  <ShoppingCart className="h-5 w-5" />
+                  {itemCount > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+                    >
+                      {itemCount}
+                    </Badge>
+                  )}
+                </Link>
               </Button>
 
               {/* Mobile Menu Button */}
