@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/CartContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,6 +28,7 @@ import Layout from "@/components/Layout";
 
 export default function Product() {
   const { id } = useParams();
+  const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
@@ -134,6 +136,18 @@ export default function Product() {
 
   const updateQuantity = (delta: number) => {
     setQuantity(Math.max(1, quantity + delta));
+  };
+
+  const handleAddToCart = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      selectedColor: selectedColor || undefined,
+      selectedSize: selectedSize || undefined,
+      quantity,
+    });
   };
 
   return (
@@ -313,7 +327,7 @@ export default function Product() {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="flex-1">
+              <Button size="lg" className="flex-1" onClick={handleAddToCart}>
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart
               </Button>
