@@ -10,6 +10,7 @@ import { CartProvider } from "./contexts/CartContext";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
+import Cart from "./pages/Cart";
 import Placeholder from "./pages/Placeholder";
 import NotFound from "./pages/NotFound";
 
@@ -66,17 +67,7 @@ const App = () => (
                 />
               }
             />
-            <Route
-              path="/cart"
-              element={
-                <Placeholder
-                  title="Shopping Cart"
-                  description="Review your selected items and proceed to checkout. Cart functionality coming soon!"
-                  backLink="/shop"
-                  backLinkText="Continue Shopping"
-                />
-              }
-            />
+            <Route path="/cart" element={<Cart />} />
             <Route
               path="/new-arrivals"
               element={
